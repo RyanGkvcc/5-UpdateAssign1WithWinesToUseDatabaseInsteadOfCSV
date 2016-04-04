@@ -1,13 +1,11 @@
-﻿//Author: David Barnes
-//CIS 237
-//Assignment 1
+﻿
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace assignment1
+namespace cis237assignment5
 {
     class WineItemCollection : IWineCollection
     {

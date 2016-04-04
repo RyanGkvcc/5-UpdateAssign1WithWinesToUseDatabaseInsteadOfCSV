@@ -8,7 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace assignment1
+namespace cis237assignment5
 {
     class CSVProcessor
     {

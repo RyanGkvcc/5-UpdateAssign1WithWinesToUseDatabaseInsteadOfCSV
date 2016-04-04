@@ -1,13 +1,11 @@
-﻿//Author: David Barnes
-//CIS 237
-//Assignment 1
+﻿
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace assignment1
+namespace cis237assignment5
 {
     class UserInterface
     {
@@ -148,10 +146,10 @@ namespace assignment1
             Console.WriteLine();
             Console.WriteLine("What would you like to do?");
             Console.WriteLine();
-            Console.WriteLine("1. Load Wine List From CSV");
-            Console.WriteLine("2. Print The Entire List Of Items");
-            Console.WriteLine("3. Search For An Item");
-            Console.WriteLine("4. Add New Item To The List");
+            Console.WriteLine("1. Print The Entire List Of Items");
+            Console.WriteLine("2. Add New Item To The List");
+            Console.WriteLine("3. Delete An Item From The List");
+            Console.WriteLine("4. Update An Item By Id");
             Console.WriteLine("5. Exit Program");
         }
 
