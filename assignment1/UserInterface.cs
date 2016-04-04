@@ -9,7 +9,7 @@ namespace cis237assignment5
 {
     class UserInterface
     {
-        const int maxMenuChoice = 5;
+        const int maxMenuChoice = 6;
         //---------------------------------------------------
         //Public Methods
         //---------------------------------------------------
@@ -146,11 +146,12 @@ namespace cis237assignment5
             Console.WriteLine();
             Console.WriteLine("What would you like to do?");
             Console.WriteLine();
-            Console.WriteLine("1. Print The Entire List Of Items");
+            Console.WriteLine("1. Find An Item By Id And Print It");
             Console.WriteLine("2. Add New Item To The List");
             Console.WriteLine("3. Delete An Item From The List");
             Console.WriteLine("4. Update An Item By Id");
-            Console.WriteLine("5. Exit Program");
+            Console.WriteLine("5. Print The Entire List Of Items");
+            Console.WriteLine("6. Exit Program");
         }
 
         //Display the Prompt

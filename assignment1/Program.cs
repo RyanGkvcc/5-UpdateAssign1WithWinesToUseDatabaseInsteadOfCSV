@@ -19,11 +19,12 @@
  */
 /*
  * The Menu Choices Displayed By The UI
- * 1. Print The Entire List Of Items
+ * 1. Find An Item By Id And Print It
  * 2. Add New Item To The List
  * 3. Delete An Item From The List
  * 4. Update An Item By Id
- * 5. Exit Program
+ * 5. Print The Entire List Of Items
+ * 6. Exit Program
  */
 using System;
 using System.Collections.Generic;
@@ -59,23 +60,23 @@ namespace cis237assignment5
             //This is the 'primer' run of displaying and getting.
             int choice = userInterface.DisplayMenuAndGetResponse();
 
-            while (choice != 5)
+            while (choice != 6)
             {
                 switch (choice)
                 {
                     case 1:
-                        //Print Entire List Of Items
-                        string[] allItems = wineItemCollection.GetPrintStringsForAllItems();
-                        if (allItems.Length > 0)
-                        {
-                            //Display all of the items
-                            userInterface.DisplayAllItems(allItems);
-                        }
-                        else
-                        {
-                            //Display error message for all items
-                            userInterface.DisplayAllItemsError();
-                        }
+                        //Find An Item By Id And Print It
+                        //string[] allItems = wineItemCollection.GetPrintStringsForAllItems();
+                        //if (allItems.Length > 0)
+                        //{
+                        //    //Display all of the items
+                        //    userInterface.DisplayAllItems(allItems);
+                        //}
+                        //else
+                        //{
+                        //    //Display error message for all items
+                        //    userInterface.DisplayAllItemsError();
+                        //}
                         break;
 
                     case 2:
@@ -100,6 +101,21 @@ namespace cis237assignment5
                     case 4:
                         //Update An Item By Id
 
+                        break;
+
+                    case 5:
+                        //Print Entire List Of Items
+                        string[] allItems = wineItemCollection.GetPrintStringsForAllItems();
+                        if (allItems.Length > 0)
+                        {
+                            //Display all of the items
+                            userInterface.DisplayAllItems(allItems);
+                        }
+                        else
+                        {
+                            //Display error message for all items
+                            userInterface.DisplayAllItemsError();
+                        }
                         break;
 
                 }
