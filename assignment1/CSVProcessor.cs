@@ -10,6 +10,8 @@ using System.Threading.Tasks;
 
 namespace cis237assignment5
 {
+
+    //Not currently being used
     class CSVProcessor
     {
         //Declare a variable to flag whether the CSV has been imported.
@@ -95,9 +97,11 @@ namespace cis237assignment5
             string id = parts[0];
             string description = parts[1];
             string pack = parts[2];
+            decimal price = 0m;
+            bool active = false;
 
             //Add a new wine item into the collection with the properties of what was read in.
-            wineItemCollection.AddNewItem(id, description, pack);
+            wineItemCollection.AddNewItem(id, description, pack, price, active);
         }
     }
 }

@@ -2,7 +2,7 @@
 
 ## Due 4-11-2016
 
-## Author
+## Author : Ryan Gowan
 
 ## Description
 
@@ -60,8 +60,8 @@ Solution Requirements:
 ### Notes
 
 
-## Outside Resources Used
+## Outside Resources Used : None
 
-## Known Problems, Issues, And/Or Errors in the Program
+## Known Problems, Issues, And/Or Errors in the Program : None
 
 

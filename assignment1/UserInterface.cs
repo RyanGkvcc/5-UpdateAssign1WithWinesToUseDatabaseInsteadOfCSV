@@ -10,6 +10,8 @@ namespace cis237assignment5
     class UserInterface
     {
         const int maxMenuChoice = 6;
+        const int MAXBOOLCHOICE = 2;
+        const int MAXUPDATEMENUCHOICE = 5;
         //---------------------------------------------------
         //Public Methods
         //---------------------------------------------------
@@ -17,7 +19,7 @@ namespace cis237assignment5
         //Display Welcome Greeting
         public void DisplayWelcomeGreeting()
         {
-            Console.WriteLine("Welcome to the wine program");
+            Console.WriteLine("Welcome to the beverage program");
         }
 
         //Display Menu And Get Response
@@ -34,7 +36,7 @@ namespace cis237assignment5
             selection = this.getSelection();
 
             //While the response is not valid
-            while (!this.verifySelectionIsValid(selection))
+            while (!this.verifySelectionIsValid(selection, maxMenuChoice))
             {
                 //display error message
                 this.displayErrorMessage();
@@ -53,7 +55,25 @@ namespace cis237assignment5
         public string GetSearchQuery()
         {
             Console.WriteLine();
-            Console.WriteLine("What would you like to search for?");
+            Console.WriteLine("What Id would you like to search for?");
+            Console.Write("> ");
+            return Console.ReadLine();
+        }
+
+        //Get the id to delete from the user
+        public string GetSearchDeleteQuery()
+        {
+            Console.WriteLine();
+            Console.WriteLine("What Id would you like to delete?");
+            Console.Write("> ");
+            return Console.ReadLine();
+        }
+
+        //Get the id to update from the user
+        public string GetSearchUpdateQuery()
+        {
+            Console.WriteLine();
+            Console.WriteLine("What Id would you like to update?");
             Console.Write("> ");
             return Console.ReadLine();
         }
@@ -65,28 +85,169 @@ namespace cis237assignment5
             Console.WriteLine("What is the new items Id?");
             Console.Write("> ");
             string id = Console.ReadLine();
-            Console.WriteLine("What is the new items Description?");
+            Console.WriteLine("What is the new items Name?");
             Console.Write("> ");
             string description = Console.ReadLine();
             Console.WriteLine("What is the new items Pack?");
             Console.Write("> ");
             string pack = Console.ReadLine();
 
+
             return new string[] { id, description, pack };
         }
 
-        //Display Import Success
-        public void DisplayImportSuccess()
+        //Get New Item Price Form The User
+        public decimal GetNewItemPrice()
         {
-            Console.WriteLine();
-            Console.WriteLine("Wine List Has Been Imported Successfully");
+            //Declares and initializes the price decimal to be returned
+            decimal price = 0;
+            Console.WriteLine("What is the new items Price?");
+            Console.Write("> ");
+            //Tries to parse the user input
+            try
+            {
+                price = decimal.Parse(this.getSelection());
+            }
+            //If the user input can not be parsed, an error message is displayed and uses recursion
+            catch
+            {
+                Console.WriteLine();
+                Console.WriteLine("Please enter a valid price.");
+                Console.WriteLine();
+                GetNewItemPrice();
+            }
+            return price;
+
         }
 
-        //Display Import Error
-        public void DisplayImportError()
+        //Get New Item Active State Form The User
+        public bool GetNewItemActiveState()
+        {
+            //Initializes the state variable to a non-valid choice
+            string state;
+            //Declares and initializes the boolean to be returned
+            bool activeState = true;
+
+            //Display menu, and prompt
+            this.displayActiveStateMenu();
+            this.displayPrompt();
+
+            //Get the selection they enter
+            state = this.getSelection();
+
+            //While the response is not valid
+            while (!this.verifySelectionIsValid(state, MAXBOOLCHOICE))
+            {
+                //display error message
+                this.displayErrorMessage();
+
+                //display the prompt again
+                this.displayPrompt();
+
+                //get the selection again
+                state = this.getSelection();
+            }
+            //The user made a valid selection, now we will check if the boolean should be changed from the initial state
+            //Changes the activeState boolean if the user has selected "No"
+            if (Int32.Parse(state) == 2)
+            {
+                activeState = false;
+            }
+            return activeState;
+        }
+
+        //Display Delete Success
+        public void DisplayDeleteSuccess(string deleteID, string process)
         {
             Console.WriteLine();
-            Console.WriteLine("There was an error importing the CSV");
+            Console.WriteLine("Beverage Id: " + deleteID + " has Successfully been " + process + "d");
+        }
+
+        //Display Delete/Update Error
+        public void DisplayDeleteUpdateError(string deleteID, string process)
+        {
+            Console.WriteLine();
+            Console.WriteLine("The " + process + " process of Beverage Id: " + deleteID + " has failed.");
+            Console.WriteLine("Please try again");
+        }
+
+        //Display No Matching Items to Delete/Update
+        public void DisplayNothingToDoError(string deleteID, string process)
+        {
+            Console.WriteLine();
+            Console.WriteLine("There are no Beverages matching Id: " + deleteID + " in the database to " + process);
+        }
+
+        //Display a message that the active state of the beverage has not changed
+        public void DisplayNoChangeInState()
+        {
+            Console.WriteLine();
+            Console.WriteLine("The active state of the beverage has not changed");
+        }
+
+        public Int32 DisplayUpdateMenuAndGetResponse(Beverage beverageToFindForUpdate)
+        {
+            //declare variable to hold the selection
+            string selection;
+
+            //Display menu, and prompt
+            this.displayUpdateMenu(beverageToFindForUpdate);
+            this.displayPrompt();
+
+            //Get the selection they enter
+            selection = this.getSelection();
+
+            //While the response is not valid
+            while (!this.verifySelectionIsValid(selection, MAXUPDATEMENUCHOICE))
+            {
+                //display error message
+                this.displayErrorMessage();
+
+                //display the prompt again
+                this.displayPrompt();
+
+                //get the selection again
+                selection = this.getSelection();
+            }
+            //Return the selection casted to an integer
+            return Int32.Parse(selection);
+        }
+
+        //Prompts for an update to a string
+        public string PromptForStringUpdate(string information)
+        {
+            string update;
+            Console.WriteLine("Please enter a new " + information);
+            update = this.getSelection();
+            return update;
+        }
+
+        //Prompts for an update to a decimal
+        public decimal PromptForDecimalUpdate(string information)
+        {
+            decimal update = 0m;
+            Console.WriteLine("Please enter a new " + information);
+            //Tries to parse the user input
+            try
+            {
+                update = decimal.Parse(this.getSelection());
+            }
+            //If the user input can not be parsed, an error message is displayed and uses recursion
+            catch
+            {
+                Console.WriteLine();
+                Console.WriteLine("Please enter a valid price.");
+                Console.WriteLine();
+                PromptForDecimalUpdate(information);
+            }
+            if (update <= 0m)
+            {
+                Console.WriteLine();
+                Console.WriteLine("Please enter a valid price.");
+                Console.WriteLine();
+                PromptForDecimalUpdate(information);
+            }
+            return update;
         }
 
         //Display All Items
@@ -106,19 +267,35 @@ namespace cis237assignment5
             Console.WriteLine("There are no items in the list to print");
         }
 
-        //Display Item Found Success
-        public void DisplayItemFound(string itemInformation)
+        //Display Item Found Header
+        public void DisplayItemFoundHeader()
         {
             Console.WriteLine();
             Console.WriteLine("Item Found!");
-            Console.WriteLine(itemInformation);
+            this.DisplayAllItemsHeader();
+        }
+        //Display All Items Header
+        public void DisplayAllItemsHeader()
+        {
+            Console.WriteLine();
+            Console.WriteLine("-----------------------Beverage Information----------------------");
+        }
+        //Display Item Information
+        public void DisplayItemInfo(Beverage itemInformation)
+        {
+            Console.WriteLine();
+            Console.WriteLine("Beverage Id: " + itemInformation.id);
+            Console.WriteLine("Beverage Name: " + itemInformation.name.Trim());
+            Console.WriteLine("Beverage Pack: " + itemInformation.pack);
+            Console.WriteLine("Beverage Price: " + itemInformation.price.ToString("C"));
+            Console.WriteLine("Beverage Active: " + itemInformation.active);
         }
 
         //Display Item Found Error
-        public void DisplayItemFoundError()
+        public void DisplayItemFoundError(String searchID)
         {
             Console.WriteLine();
-            Console.WriteLine("A Match was not found");
+            Console.WriteLine("A Match was not found for Id: " + searchID);
         }
 
         //Display Add Wine Item Success
@@ -135,7 +312,7 @@ namespace cis237assignment5
             Console.WriteLine("An Item With That Id Already Exists");
         }
 
-
+        
         //---------------------------------------------------
         //Private Methods
         //---------------------------------------------------
@@ -152,6 +329,28 @@ namespace cis237assignment5
             Console.WriteLine("4. Update An Item By Id");
             Console.WriteLine("5. Print The Entire List Of Items");
             Console.WriteLine("6. Exit Program");
+        }
+        //Display the update menu
+        private void displayUpdateMenu(Beverage beverageToFindForUpdate)
+        {
+            Console.WriteLine();
+            Console.WriteLine("What would you like to update on this Beverage?");
+            Console.WriteLine();
+            Console.WriteLine("1: Name: " + beverageToFindForUpdate.name.Trim());
+            Console.WriteLine("2: Pack: " + beverageToFindForUpdate.pack);
+            Console.WriteLine("3: Price: " + beverageToFindForUpdate.price.ToString("C"));
+            Console.WriteLine("4: Active: " + beverageToFindForUpdate.active);
+            Console.WriteLine("5: Update Complete");
+        }
+
+        //Display the active state menu
+        private void displayActiveStateMenu()
+        {
+            Console.WriteLine();
+            Console.WriteLine("Is this an active item?");
+            Console.WriteLine("1: Yes");
+            Console.WriteLine("2: No");
+            Console.Write("> ");
         }
 
         //Display the Prompt
@@ -175,7 +374,7 @@ namespace cis237assignment5
         }
 
         //Verify that a selection from the main menu is valid
-        private bool verifySelectionIsValid(string selection)
+        private bool verifySelectionIsValid(string selection, int maxChoice)
         {
             //Declare a returnValue and set it to false
             bool returnValue = false;
@@ -186,7 +385,7 @@ namespace cis237assignment5
                 int choice = Int32.Parse(selection);
 
                 //If the choice is between 0 and the maxMenuChoice
-                if (choice > 0 && choice <= maxMenuChoice)
+                if (choice > 0 && choice <= maxChoice)
                 {
                     //set the return value to true
                     returnValue = true;

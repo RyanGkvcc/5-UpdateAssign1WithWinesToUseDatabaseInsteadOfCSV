@@ -21,10 +21,10 @@ namespace cis237assignment5
         }
 
         //Add a new item to the collection
-        public void AddNewItem(string id, string description, string pack)
+        public void AddNewItem(string id, string name, string pack, decimal price, bool active)
         {
             //Add a new WineItem to the collection. Increase the Length variable.
-            wineItems[wineItemsLength] = new WineItem(id, description, pack);
+            wineItems[wineItemsLength] = new WineItem(id, name, pack, price, active);
             wineItemsLength++;
         }
         
@@ -56,11 +56,12 @@ namespace cis237assignment5
         }
 
         //Find an item by it's Id
-        public string FindById(string id)
+        public Int32 FindById(string id)
         {
-            //Declare return string for the possible found item
-            string returnString = null;
-
+            //Declare and initialize a counter
+            Int32 counter = 0;
+            Int32 location = -1;
+            
             //For each WineItem in wineItems
             foreach (WineItem wineItem in wineItems)
             {
@@ -70,14 +71,30 @@ namespace cis237assignment5
                     //if the wineItem Id is the same as the search id
                     if (wineItem.Id == id)
                     {
-                        //Set the return string to the result of the wineItem's ToString method
-                        returnString = wineItem.ToString();
+                        //Establishes the location for the update/delete process
+                        location = counter;
                     }
                 }
+                counter++;
             }
-            //Return the returnString
-            return returnString;
+            return location;
         }
 
+        //Remove the matching item from the wineItems array - I know this is extra unnecessary work
+        public void RemoveId(Int32 location)
+        {
+            //Removes any information stored in the array location passed in
+            Array.Clear(wineItems, location, 1);
+            //Did not decrement the length of the wineItemsLength because the item removed may not be the last item of the array.
+            //This may cause null locations in the array, which can be filled in later with program modifications, or everything in the 
+            //array could be moved by one location. 
+        }
+
+        //Update the wineItems array to match the Beverages database - I know this is extra unnecessary work
+        public void UpdateById(Int32 location, Beverage updatedBeverage)
+        {
+            //Overwrites the information that was stored in the array location passed in with the information of the updated Beverage
+            wineItems[location] = new WineItem(updatedBeverage.id, updatedBeverage.name, updatedBeverage.pack, updatedBeverage.price, updatedBeverage.active);
+        }
     }
 }
